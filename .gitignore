@@ -1,0 +1,8 @@
+# Ignore ansible retry files
+*.retry
+
+# Ignore vim swap files
+*.swp
+
+# Ignore the backup directory as it's just backups pulled from other hosts
+backup/
