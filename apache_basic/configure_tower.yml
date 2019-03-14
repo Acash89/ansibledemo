@@ -81,12 +81,32 @@
 
   - name: (KLUDGE) IMPORT THE TOWER INVENTORY FOR WEB SERVERS
     become: yes
+    #sudo tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
     shell: /usr/bin/tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
     register: shell_output
 
-  - name: SHOW THE TOWER INVENTORY IMPORT RESULT
+  - name: (KLUDGE) SHOW THE TOWER INVENTORY IMPORT RESULT
     debug:
       var: shell_output
 
-#sudo tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
+  - name: CREATE THE TOWER JOB TEMPLATE FOR DEPLOYING WEB SERVERS
+    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_job_template_module.html
+    tower_job_template:
+      name: Web server deployment template
+      description: Job template for running web server deployment playbook
+      job_type: run
+      inventory: Web server inventory
+      project: Web server deployment project
+      playbook: apache_basic/install_apache.yml
+      credential: Web server credential
+      limit: web
+      become_enabled: yes
+      #survey_enabled: yes
 
+
+      tower_host: https://13.229.87.223
+      tower_username: admin
+      tower_password: ansible
+      #tower_config_file: "tower_cli.cfg"
+      tower_verify_ssl: false
+      state: present
