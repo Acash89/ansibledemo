@@ -44,3 +44,38 @@
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
       state: present
+
+  - name: CREATE THE TOWER INVENTORY FOR WEB SERVERS
+    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_inventory_module.html
+    tower_inventory:
+      name: Web server inventory
+      description: Inventory of web servers
+      organization: Default
+
+      tower_host: https://13.229.90.84
+      tower_username: admin
+      tower_password: ansible
+      #tower_config_file: "tower_cli.cfg"
+      tower_verify_ssl: false
+      state: present
+
+  - name: IMPORT THE TOWER INVENTORY FOR WEB SERVERS
+    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_inventory_source_module.html
+    tower_inventory_source:
+      name: Web server inventory source
+      description: Inventory source for web servers
+      #organization: Default
+      inventory: Web server inventory
+      source: file
+      source_path: /home/student1/ansibledemo/apache_basic/hosts
+
+
+      #sudo tower-manage inventory_import --source=<location of you inventory> --inventory-name="Ansible Workshop Inventory"
+
+      tower_host: https://13.229.90.84
+      tower_username: admin
+      tower_password: ansible
+      #tower_config_file: "tower_cli.cfg"
+      tower_verify_ssl: false
+      state: present
+
