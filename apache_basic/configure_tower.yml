@@ -16,6 +16,7 @@
       # kind: ssh is equivalent to Tower "Machine" credential
       kind: ssh
       become_method: sudo
+
       tower_host: https://13.229.90.84
       tower_username: admin
       tower_password: ansible
@@ -30,30 +31,16 @@
       description: Collection of playbooks for deploying and configuring web servers
       organization: Default
 
+      scm_type: git
+      #scm_url: https://github.com/eraser215/ansibledemo.git 
+      scm_url: https://github.com/eraser215/ansibledemo
+      scm_clean: yes
+      scm_delete_on_update: yes
+      scm_update_on_launch: yes
 
-#SCM TYPE  Git
-#SCM URL   https://github.com/ansible/lightbulb
-#SCM BRANCH   
-#SCM UPDATE OPTIONS  [x] Clean
-#[x] Delete on Update
-#[x] Update on Launch
-#
-
-
-
-
-
-
-      name: Web server credential
-      description: Credentials for web servers
-      organization: Default
-      username: student1
-      password: ansible
-      # kind: ssh is equivalent to Tower "Machine" credential
-      kind: ssh
-      become_method: sudo
       tower_host: https://13.229.90.84
       tower_username: admin
       tower_password: ansible
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
+      state: present
