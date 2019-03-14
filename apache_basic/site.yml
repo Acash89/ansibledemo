@@ -13,10 +13,12 @@
   tasks:
   - name: install httpd packages
     yum:
-      name: "{{ item }}"
+      #name: "{{ item }}"
+      name: "{{ httpd_packages }}"
       state: present
-    with_items: "{{ httpd_packages }}"
-    notify: restart apache service
+    #with_items: "{{ httpd_packages }}"
+    #loop: "{{ httpd_packages|flatten(levels=1) }}"
+    #notify: restart apache service
 
 
   - name: create site-enabled directory
