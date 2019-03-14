@@ -17,7 +17,7 @@
       kind: ssh
       become_method: sudo
 
-      tower_host: https://13.229.90.84
+      tower_host: https://13.229.87.223
       tower_username: admin
       tower_password: ansible
       #tower_config_file: "tower_cli.cfg"
@@ -38,7 +38,7 @@
       scm_delete_on_update: yes
       scm_update_on_launch: yes
 
-      tower_host: https://13.229.90.84
+      tower_host: https://13.229.87.223
       tower_username: admin
       tower_password: ansible
       #tower_config_file: "tower_cli.cfg"
@@ -52,30 +52,41 @@
       description: Inventory of web servers
       organization: Default
 
-      tower_host: https://13.229.90.84
+      tower_host: https://13.229.87.223
       tower_username: admin
       tower_password: ansible
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
       state: present
 
-  - name: IMPORT THE TOWER INVENTORY FOR WEB SERVERS
-    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_inventory_source_module.html
-    tower_inventory_source:
-      name: Web server inventory source
-      description: Inventory source for web servers
-      #organization: Default
-      inventory: Web server inventory
-      source: file
-      source_path: /home/student1/ansibledemo/apache_basic/hosts
+#  - name: IMPORT THE TOWER INVENTORY FOR WEB SERVERS
+#    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_inventory_source_module.html
+#    tower_inventory_source:
+#      name: Web server inventory source
+#      description: Inventory source for web servers
+#      #organization: Default
+#      inventory: Web server inventory
+#      source: file
+#      #source_path: "/home/student1/ansibledemo/apache_basic/hosts"
+#      source_path: "/tmp/hosts"
 
 
-      #sudo tower-manage inventory_import --source=<location of you inventory> --inventory-name="Ansible Workshop Inventory"
 
-      tower_host: https://13.229.90.84
-      tower_username: admin
-      tower_password: ansible
-      #tower_config_file: "tower_cli.cfg"
-      tower_verify_ssl: false
-      state: present
+#      tower_host: https://13.229.87.223
+#      tower_username: admin
+#      tower_password: ansible
+#      #tower_config_file: "tower_cli.cfg"
+#      tower_verify_ssl: false
+#      state: present
+
+  - name: (KLUDGE) IMPORT THE TOWER INVENTORY FOR WEB SERVERS
+    become: yes
+    shell: /usr/bin/tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
+    register: shell_output
+
+  - name: SHOW THE TOWER INVENTORY IMPORT RESULT
+    debug:
+      var: shell_output
+
+#sudo tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
 
