@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  name: CONFIGURE ANSIBLE TOWER FOR BEN BLASCO
+  #become: yes
+  gather_facts: no
+
+  tasks:
+  - name: CREATE THE CREDENTIAL FOR WEB SERVERS
+    tower_credential:
+      name: Web server credential
+      description: Credentials for web servers
+      organization: Default
+      username: student1
+      password: ansible
+      # kind: ssh is equivalent to Tower "Machine" credential
+      kind: ssh
+      become_method: sudo
+      tower_host: https://13.229.90.84
+      tower_username: admin
+      tower_password: ansible
+      #tower_config_file: "tower_cli.cfg"
+      tower_verify_ssl: false
