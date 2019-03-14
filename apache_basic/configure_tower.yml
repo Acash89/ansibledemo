@@ -6,7 +6,44 @@
 
   tasks:
   - name: CREATE THE CREDENTIAL FOR WEB SERVERS
+    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_credential_module.html
     tower_credential:
+      name: Web server credential
+      description: Credentials for web servers
+      organization: Default
+      username: student1
+      password: ansible
+      # kind: ssh is equivalent to Tower "Machine" credential
+      kind: ssh
+      become_method: sudo
+      tower_host: https://13.229.90.84
+      tower_username: admin
+      tower_password: ansible
+      #tower_config_file: "tower_cli.cfg"
+      tower_verify_ssl: false
+      state: present
+
+  - name: CREATE THE PROJECT FOR WEB SERVERS
+    # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_project_module.html
+    tower_project:
+      name: Web server deployment project
+      description: Collection of playbooks for deploying and configuring web servers
+      organization: Default
+
+
+#SCM TYPE  Git
+#SCM URL   https://github.com/ansible/lightbulb
+#SCM BRANCH   
+#SCM UPDATE OPTIONS  [x] Clean
+#[x] Delete on Update
+#[x] Update on Launch
+#
+
+
+
+
+
+
       name: Web server credential
       description: Credentials for web servers
       organization: Default
