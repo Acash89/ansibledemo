@@ -7,7 +7,7 @@
     httpd_packages:
       - httpd
       - mod_wsgi
-    apache_test_message: This is a test message
+    apache_test_message: This test message was updated by a job template at {{ ansible_date_time.date }} {{ ansible_date_time.time }}
     apache_max_keep_alive_requests: 115
 
   tasks:
