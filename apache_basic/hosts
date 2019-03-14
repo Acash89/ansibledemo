@@ -24,5 +24,4 @@ switch2 ansible_host=172.21.4.17
 ansible_network_os=junos
 
 [control]
-ansible ansible_host=13.229.90.84
-
+ansible ansible_host=13.229.87.223
