@@ -4,7 +4,21 @@
   #become: yes
   gather_facts: no
 
+  vars:
+    tower_host_ip: "{{ hostvars['ansible']['ansible_host'] }}"
+    tower_username: admin
+    tower_password: ansible
+
   tasks:
+
+  - name: PRINT THE TOWER HOST IP (FOR DEBUGGING)
+    debug:
+      var: hostvars['ansible']['ansible_host']
+    
+  - name: PRINT THE TOWER HOST IP VARIABLE (FOR DEBUGGING)
+    debug:
+      var: tower_host_ip
+
   - name: CREATE THE CREDENTIAL FOR WEB SERVERS
     # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_credential_module.html
     tower_credential:
@@ -17,9 +31,9 @@
       kind: ssh
       become_method: sudo
 
-      tower_host: https://13.229.87.223
-      tower_username: admin
-      tower_password: ansible
+      tower_host: "https://{{ tower_host_ip }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
       state: present
@@ -38,9 +52,9 @@
       scm_delete_on_update: yes
       scm_update_on_launch: yes
 
-      tower_host: https://13.229.87.223
-      tower_username: admin
-      tower_password: ansible
+      tower_host: "https://{{ tower_host_ip }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
       state: present
@@ -52,9 +66,9 @@
       description: Inventory of web servers
       organization: Default
 
-      tower_host: https://13.229.87.223
-      tower_username: admin
-      tower_password: ansible
+      tower_host: "https://{{ tower_host_ip }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
       state: present
@@ -72,9 +86,9 @@
 
 
 
-#      tower_host: https://13.229.87.223
-#      tower_username: admin
-#      tower_password: ansible
+#      tower_host: https://"{{ tower_host_ip }}"
+#      tower_username: "{{ tower_username }}"
+#      tower_password: "{{ tower_password }}"
 #      #tower_config_file: "tower_cli.cfg"
 #      tower_verify_ssl: false
 #      state: present
@@ -104,9 +118,9 @@
       #survey_enabled: yes
 
 
-      tower_host: https://13.229.87.223
-      tower_username: admin
-      tower_password: ansible
+      tower_host: "https://{{ tower_host_ip }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
       #tower_config_file: "tower_cli.cfg"
       tower_verify_ssl: false
       state: present
