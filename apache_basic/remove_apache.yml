@@ -9,7 +9,7 @@
       name: httpd
       state: stopped
 
-  - name: remove apache
+  - name: remove apache (httpd)
     yum:
       name: httpd
       state: absent
