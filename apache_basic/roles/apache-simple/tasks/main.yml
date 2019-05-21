@@ -1,0 +1,30 @@
+---
+# tasks file for apache-simple
+- name: HTTPD PACKAGES ARE PRESENT
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ httpd_packages }}"
+  notify: RESTART APACHE SERVICE
+
+- name: SITE-ENABLED DIRECTORY IS PRESENT
+  file:
+    name: /etc/httpd/conf/sites-enabled
+    state: directory
+
+- name: LATEST HTTPD.CONF IS PRESENT
+  template:
+    src: templates/httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify: RESTART APACHE SERVICE
+
+- name: LATEST INDEX.HTML IS PRESENT
+  template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+
+- name: HTTPD IS STARTED AND ENABLED
+  service:
+    name: httpd
+    state: started
+    enabled: yes

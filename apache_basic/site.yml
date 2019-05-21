@@ -1,0 +1,7 @@
+---
+- hosts: web
+  name: THIS IS MY ROLE BASED PLAYBOOK
+  become: yes
+  
+  roles:
+    - apache-simple

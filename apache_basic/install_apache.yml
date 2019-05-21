@@ -1,0 +1,14 @@
+---
+- hosts: web
+  name: INSTALL THE APACHE WEB SERVICE
+  become: yes
+
+  tasks:
+  - name: INSTALL THE HTTPD PACKAGE
+    yum:
+      name: httpd
+      state: present
+  - name: START THE HTTPD SERVICE
+    service:
+      name: httpd
+      state: started
