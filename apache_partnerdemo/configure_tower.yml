@@ -96,7 +96,7 @@
   - name: (KLUDGE) IMPORT THE TOWER INVENTORY FOR WEB SERVERS
     become: yes
     #sudo tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
-    shell: /usr/bin/tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
+    shell: /usr/bin/tower-manage inventory_import --source=/home/student1/lightbulb/lessons/lab_inventory/student1-instances.txt  --inventory-name="Web server inventory"
     register: shell_output
 
   - name: (KLUDGE) SHOW THE TOWER INVENTORY IMPORT RESULT
@@ -111,7 +111,7 @@
       job_type: run
       inventory: Web server inventory
       project: Web server deployment project
-      playbook: apache_basic/site_roles.yml
+      playbook: apache_basic/site.yml
       credential: Web server credential
       limit: web
       become_enabled: yes
