@@ -22,7 +22,7 @@
   - name: CREATE THE CREDENTIAL FOR WEB SERVERS
     # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_credential_module.html
     tower_credential:
-      name: Web server credential
+      name: Workshop Credentials
       description: Credentials for web servers
       organization: Default
       username: student1
@@ -41,13 +41,14 @@
   - name: CREATE THE PROJECT FOR WEB SERVERS
     # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_project_module.html
     tower_project:
-      name: Web server deployment project
+      name: Ansible Workshop Examples
       description: Collection of playbooks for deploying and configuring web servers
       organization: Default
 
       scm_type: git
       #scm_url: https://github.com/eraser215/ansibledemo.git 
-      scm_url: https://github.com/eraser215/ansibledemo
+      #scm_url: https://github.com/eraser215/ansibledemo
+      scm_url: https://github.com/ansible/workshop-examples.git
       scm_clean: yes
       scm_delete_on_update: yes
       scm_update_on_launch: yes
@@ -62,7 +63,7 @@
   - name: CREATE THE TOWER INVENTORY FOR WEB SERVERS
     # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_inventory_module.html
     tower_inventory:
-      name: Web server inventory
+      name: Workshop Inventory
       description: Inventory of web servers
       organization: Default
 
@@ -96,7 +97,7 @@
   - name: (KLUDGE) IMPORT THE TOWER INVENTORY FOR WEB SERVERS
     become: yes
     #sudo tower-manage inventory_import --source=/home/student1/ansibledemo/apache_basic/hosts --inventory-name="Web server inventory"
-    shell: /usr/bin/tower-manage inventory_import --source=/home/student1/lightbulb/lessons/lab_inventory/student1-instances.txt  --inventory-name="Web server inventory"
+    shell: /usr/bin/tower-manage inventory_import --source=/home/student1/lab_inventory/hosts --inventory-name="Workshop Inventory"
     register: shell_output
 
   - name: (KLUDGE) SHOW THE TOWER INVENTORY IMPORT RESULT
@@ -106,13 +107,13 @@
   - name: CREATE THE TOWER JOB TEMPLATE FOR DEPLOYING WEB SERVERS
     # Documentation here: https://docs.ansible.com/ansible/latest/modules/tower_job_template_module.html
     tower_job_template:
-      name: Web server deployment template
+      name: Install Apache
       description: Job template for running web server deployment playbook
       job_type: run
-      inventory: Web server inventory
-      project: Web server deployment project
-      playbook: apache_basic/site.yml
-      credential: Web server credential
+      inventory: Workshop Inventory
+      project: Ansible Workshop Examples
+      playbook: rhel/apache/apache_install.yml
+      credential: Workshop Credentials
       limit: web
       become_enabled: yes
       #survey_enabled: yes
