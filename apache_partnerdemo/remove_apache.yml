@@ -1,5 +1,5 @@
 ---
-- hosts: web
+- hosts: all
   name: Remove the apache web service
   #become: yes
 
